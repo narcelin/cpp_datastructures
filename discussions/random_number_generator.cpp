@@ -5,44 +5,26 @@
 
 using namespace std;
 
-int Seeder(long long program_start_time, int cycle);
-//Create a value for the srand() function to absorb. This will help with randomization
+void RandomFloatingNumberGenerator(); // Random float Between 1 and 10
 
 int main(){
+    RandomFloatingNumberGenerator();
 
-    int user_input;
-    int changing_seeder = 0;
-
-   do{
-    changing_seeder += 47;
-
-    cout << "Run program press 1. Press any other key to exit" << endl;
-    cin >> user_input;
-
-    cout << time(NULL) << endl;
-
-
-    // cout << time(NULL)/changing_seeder << endl;
-
-    // srand(time(NULL)%changing_seeder);
-
-    // float min = 13;
-    // float max = 27.345;
-
-    // int rand_factor = rand() - RAND_MAX;
-    // cout << "rand(): "<< (double)rand() << endl;
-    // cout << "RAND_MAX: " << (double)RAND_MAX << endl;
-    // cout << "rand_factor: " << rand_factor << endl;
-
-    // float range_difference = max - min;
-    // cout << range_difference * rand_factor << endl;
-   } while (user_input == 1);
-
-    cout << "*** PROGRAM END ***" << endl;
-   
-return 0;
+    return 0;
 }
 
-Seeder(long long program_start_time, int cycle){
-    
+void RandomFloatingNumberGenerator(){
+    srand(time(0));
+
+    string random_float = "";
+    int rand_int = (rand() % 10) + 1;
+    random_float = to_string(rand_int);
+    random_float += "."; //Adds decimal
+
+    for(int i = 0; i != 7; i++ ){ //Create a random int between 1-99 then concates it to the end of the string
+        int rand_int = (rand() % 9) + 1;
+        random_float += to_string(rand_int);
+    }
+
+    cout << random_float;
 };
