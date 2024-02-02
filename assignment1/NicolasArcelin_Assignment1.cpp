@@ -1,0 +1,111 @@
+/* 
+Coin Dispenser Machine by Nicolas Arcelin Ovando
+Created on 01/23/2024
+Input a monetary value in format of $xx.xx and this program will dispense the appropriate change. (Using Canadas monetary system)
+Example: user inputs 5.42, machine dispenses the following;  (2) two dollar coints, (1) one dollar coin, (1) quarter, (1) dime, (1) nickel, (2) pennies
+*/
+
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <cstdlib> 
+#include <cmath>
+using namespace std;
+
+int main() { //Using Canadian system
+
+//Coin values are multiplied by 100
+    const int TWO_DOLLAR_COIN_VALUE = 200;
+    const int ONE_DOLLAR_COIN_VALUE = 100;
+    const int QUARTER_VALUE = 25;
+    const int DIME_VALUE = 10;
+    const int NICKEL_VALUE = 5;
+    const int PENNY_VALUE = 1;
+
+
+    cout << "Input Monetary Value: $";
+    double user_money_input;
+    cin >> user_money_input;
+    cout << endl << "Value $" << user_money_input << endl;
+
+    if(user_money_input <= 0 || user_money_input > 100){
+        cout << "Invalid input, please place a value between 0 and 100" << endl;
+        exit(1);
+        return(0);
+    }
+
+    int money_x_100 = ceil(user_money_input * 100);
+
+//Two Dollar Coins
+    int two_dollar_coins = money_x_100 / TWO_DOLLAR_COIN_VALUE;
+    int remainder_after_two_dollar_coins = money_x_100 % TWO_DOLLAR_COIN_VALUE;
+    cout << "Two dollar coins: " << two_dollar_coins << endl;
+
+    if(remainder_after_two_dollar_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    }
+
+//One Dollar Coins
+    int one_dollar_coins = remainder_after_two_dollar_coins / ONE_DOLLAR_COIN_VALUE;
+    int remainder_after_one_dollar_coins = remainder_after_two_dollar_coins % ONE_DOLLAR_COIN_VALUE;
+
+    cout << "One dollar coins: " << one_dollar_coins << endl;
+    
+    if(remainder_after_one_dollar_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    }
+    
+//Quater Coins
+    int quarter_coins = remainder_after_one_dollar_coins / QUARTER_VALUE;
+    int remainder_after_quarter_coins = remainder_after_one_dollar_coins % QUARTER_VALUE;
+
+    cout << "Quarter coins: " << quarter_coins << endl;
+    
+    if(remainder_after_quarter_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    }
+      
+//Dime Coins
+    int dime_coins = remainder_after_quarter_coins / DIME_VALUE;
+    int remainder_after_dime_coins = remainder_after_quarter_coins % DIME_VALUE;
+
+    cout << "Dime coins: " << dime_coins << endl;
+    
+    if(remainder_after_dime_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    } 
+
+//Nickel Coins
+    int nickel_coins = remainder_after_dime_coins / NICKEL_VALUE;
+    int remainder_after_nickel_coins = remainder_after_dime_coins % NICKEL_VALUE;
+
+    cout << "Nickel coins: " << nickel_coins << endl;
+    
+    if(remainder_after_nickel_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    } 
+
+//Penny Coins
+    int penny_coins = remainder_after_nickel_coins / PENNY_VALUE;
+    int remainder_after_penny_coins = remainder_after_nickel_coins % PENNY_VALUE;
+
+    cout << "Penny coins: " << penny_coins << endl;
+    
+    if(remainder_after_penny_coins == 0){
+        cout << "End of program" << endl << endl;
+        exit(1);
+        return(0);
+    } 
+
+    return 0;
+}
