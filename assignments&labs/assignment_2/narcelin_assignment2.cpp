@@ -26,7 +26,7 @@ r = (1+ (APR/100)^1/12) - 1
 
 //Pointers for the functions?? call by reference
 
-void ValueInputer();
+void ValueInputer(int* p, double* apr, int* n);
 
 void AprConverter(double apr);
 
@@ -39,28 +39,31 @@ void TotalPaymentsAndInterestAccumulator();
 void DisplayTabularInformation();
 
 int main(){
-    ValueInputer();
+    int p = 0; // Loan Amount
+    double apr = 0.00; //Annual Percentage Rate
+    int n = 0; //Loan term in months
+
+    ValueInputer(&p, &apr, &n);
     return 0;
 }
 
-void ValueInputer(){ 
-    int p;
-    int apr;
-    int n;
+void ValueInputer(int* p_ptr, double* apr_ptr, int* n_ptr){ 
+
     cout << "----- Input the following values -----" << endl;
    
     cout << "Loan Amount (P): ";
-    cin >> p;
+    cin >> *p_ptr;
+    cout << *p_ptr;
     
     cout << "Annual Percentage Rate (APR): ";
-    cin >> apr;
+    // cin >> apr;
    
     cout << "Loan Term \"in years\" (n): ";
-    cin >> n;
+    // cin >> n;
 
 };
 /*
-ERROR: if non integer value is inputted program ends without trying to convert it
+ERROR: if non integer value is inputted program ends without trying to convert it. (SOLVE using pointers)
 */
 
 void AprConverter(double apr);
