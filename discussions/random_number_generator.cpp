@@ -4,17 +4,34 @@
 
 using namespace std;
 
-void RandomFloatingNumberGenerator(); // Random float Between 1 and 10
+void RandomFloatingNumberGenerator(); // Random float BETWEEN 0 and 3.40282347e+38
 
 int main(){
     // RandomFloatingNumberGenerator();
+    float floattt = 3.40282347e+38; // MAX FLOAT INPUT
 
-    char char_array[45];
-    cin >> char_array;
+    char user_float_input[46];
+    cin >> user_float_input; //User input float number
+    int decimals_index = 0;
+    int user_inputs_length = 0;
 
-    for(int i = 0; char_array[i] != '\0'; i++){
-        cout << char_array[i];
+    //Issue. If user starts with a decimal input ERROR
+    for(int i = 0; user_float_input[i] != '.' && i != 47; i++){ //Locates decimal in the users input
+        decimals_index += 1;
     };
+
+    for(int i = 0; user_float_input[i] != '\0'; i++){
+            user_inputs_length += 1;
+    }; cout << "Users Input Length: " << user_inputs_length << endl; //Includes decimal. Should I remove it and rename this variable? Or is that knowlege intuitive.
+
+
+    if(decimals_index == 47){ // Decimal does not exist.
+        decimals_index = -1;
+    } else { //If decimal exists get right and left lengths
+        int left_of_decimal_length = decimals_index;
+        int right_of_decimal_length = 0;
+    }
+    
     return 0;
 }
 
