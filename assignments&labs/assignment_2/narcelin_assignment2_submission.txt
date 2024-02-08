@@ -17,11 +17,11 @@ See repository @ https://github.com/narcelin/workspaceForProgramming2/tree/LoanC
 
 using namespace std;
 
-/* PROGRAM INFO
+/* PSUDO CODE
 
 Inputs: loan amount (P), annual percentage rate (APR), loan term(n) - in years and/or months
 
-Goal: calculates and displays the monthly payments and balance of loan until the load is paid off. Known as "amortization schedule"
+Goal: claculates and displays the monthly payments and balance of loan until the load is paid off. Known as "amortization schedule"
 
 Monthly payments calculated using amortization equations: | M = P ((r(1+r)^n)/((1+r)^n)-1) | M = monthly payments, P is principal load, r is the monthly interest rate and n is the number of pauments over loan's lifetime.
 
