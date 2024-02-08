@@ -1,1 +1,1 @@
-interest_amount
+TotalPaymentsAndInterestAccumulator

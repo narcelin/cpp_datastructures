@@ -10,6 +10,7 @@ Creator: Nicolas Arcelin Ovando
 #include <iostream>
 #include <cmath>
 #include <array>
+#include <vector>
 
 using namespace std;
 
@@ -31,8 +32,8 @@ void ValueInputer(double* balance, double* apr, int* n);
 float AprConverter(double apr);
 double AmortizationCalculator(int balance, float r, int n);
 void InterestAndPrincipalCalculator(double* balance, float r, double* payment_amount, double* interest_amount, double* principal_amount);
-void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* payment_amount);
-void DisplayTabularInformation();
+void TotalPaymentsAndInterestAccumulator(int n, double* balance_ptr, float r, double* payment_amount, double* interest_amount, double* principal_amount, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]);
+void DisplayTabularInformation(int n, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]);
 
 
 
@@ -47,9 +48,16 @@ int main(){
     // ValueInputer(&balance, &apr, &n);
     float r = AprConverter(apr);
     double payment_amount = AmortizationCalculator(balance, r, n); //Monthly payments
-    InterestAndPrincipalCalculator(&balance, r, &payment_amount, &interest_amount, &principal_amount);
-    InterestAndPrincipalCalculator(&balance, r, &payment_amount, &interest_amount, &principal_amount);
-    
+
+
+    double beginning_balances[n - 1];
+    double ending_balances[n - 1];
+    double interest_amounts[n - 1];
+    double principal_amounts[n-1];
+
+
+    TotalPaymentsAndInterestAccumulator(n, &balance, r, &payment_amount, &interest_amount, &principal_amount, beginning_balances, ending_balances, interest_amounts, principal_amounts);
+    DisplayTabularInformation(n, beginning_balances, ending_balances, interest_amounts, principal_amounts);
 
     return 0;
 }
@@ -84,22 +92,37 @@ void InterestAndPrincipalCalculator(double* balance_ptr, float r, double* paymen
     *interest_amount = (r * *balance_ptr);
     *principal_amount = *payment_amount - *interest_amount;
     *balance_ptr = *balance_ptr - *principal_amount;
-    cout << "NEW LINE" << endl << *payment_amount << endl << *interest_amount << endl << *principal_amount << endl << *balance_ptr << endl;;
+    // cout << "NEW LINE" << endl << *payment_amount << endl << *interest_amount << endl << *principal_amount << endl << *balance_ptr << endl;
     
     /*
     update interest value and principal value
     */
 };
 
-void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* payment_amount){
-    double beginning_balance[n - 1];
-    double ending_balance[n - 1];
-    double interest_amounts[n - 1];
-    double principal_amounts[n-1];
+void TotalPaymentsAndInterestAccumulator(int n, double* balance_ptr, float r, double* payment_amount, double* interest_amount, double* principal_amount, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]){ 
 
-    for(int i = n; i > 0; i--){
+
+    for(int i = 0; i < n; i++){
+        beginning_balances[i] = *balance_ptr;
+        InterestAndPrincipalCalculator(balance_ptr, r, payment_amount, interest_amount, principal_amount);
+        interest_amounts[i] = *interest_amount;
+        principal_amounts[i] = *principal_amount;
+        ending_balances[i] = *balance_ptr;
+    }
+};
+
+void DisplayTabularInformation(int n, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]){
+    cout.width(4);
+    cout << "Index \t" << "Beginning Balance \t" << "Interest \t" << "Principal \t" << "Ending Balance" << endl;
+
+    for(int i = 0; i < n; i++){
+        cout << i << "\t" << beginning_balances[i] << "\t\t\t" << interest_amounts[i] << "\t\t" << principal_amounts[i] << "\t\t" << ending_balances[i] << endl;
 
     }
 };
 
-void DisplayTabularInformation();
+/*
+ISSUES:
+
+Balance is rounding to the nearest decimal for some reason 
+*/
