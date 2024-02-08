@@ -1,16 +1,19 @@
 /*
+
 Feburary 2024
 
 Loan Calculator
 Assignment 2-3 for Programming 2 class taught by Dr. Sareh Raebi.
 Creator: Nicolas Arcelin Ovando
 
+See repository @ https://github.com/narcelin/workspaceForProgramming2/tree/LoanCalculator_Assignment2-3/assignments%26labs/assignment_2
 */
 
 #include <iostream>
 #include <cmath>
 #include <array>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -26,11 +29,9 @@ r = (1+ (APR/100)^1/12) - 1
 
 */
 
-//Pointers for the functions?? call by reference
-
 void ValueInputer(double* balance, double* apr, int* n);
 float AprConverter(double apr);
-double AmortizationCalculator(int balance, float r, int n);
+double AmortizationCalculator(double balance, float r, int n);
 void InterestAndPrincipalCalculator(double* balance, float r, double* payment_amount, double* interest_amount, double* principal_amount);
 void TotalPaymentsAndInterestAccumulator(int n, double* balance_ptr, float r, double* payment_amount, double* interest_amount, double* principal_amount, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]);
 void DisplayTabularInformation(int n, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]);
@@ -38,7 +39,7 @@ void DisplayTabularInformation(int n, double beginning_balances[], double ending
 
 
 int main(){
-    double balance = 20000; // Loan Amount
+    double balance = 20000; //Loan Amount
     double apr = 10; //Annual Percentage Rate
     int n = 24; //Loan term in months
 
@@ -84,7 +85,7 @@ float AprConverter(double apr){
     return r;
 };
 
-double AmortizationCalculator(int balance, float r, int n){
+double AmortizationCalculator(double balance, float r, int n){
     return(balance * (r * pow((1 + r), n))/(pow((1 + r), n) - 1));
 };
 
@@ -92,16 +93,9 @@ void InterestAndPrincipalCalculator(double* balance_ptr, float r, double* paymen
     *interest_amount = (r * *balance_ptr);
     *principal_amount = *payment_amount - *interest_amount;
     *balance_ptr = *balance_ptr - *principal_amount;
-    // cout << "NEW LINE" << endl << *payment_amount << endl << *interest_amount << endl << *principal_amount << endl << *balance_ptr << endl;
-    
-    /*
-    update interest value and principal value
-    */
 };
 
 void TotalPaymentsAndInterestAccumulator(int n, double* balance_ptr, float r, double* payment_amount, double* interest_amount, double* principal_amount, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]){ 
-
-
     for(int i = 0; i < n; i++){
         beginning_balances[i] = *balance_ptr;
         InterestAndPrincipalCalculator(balance_ptr, r, payment_amount, interest_amount, principal_amount);
@@ -112,17 +106,23 @@ void TotalPaymentsAndInterestAccumulator(int n, double* balance_ptr, float r, do
 };
 
 void DisplayTabularInformation(int n, double beginning_balances[], double ending_balances[], double interest_amounts[], double principal_amounts[]){
-    cout.width(4);
-    cout << "Index \t" << "Beginning Balance \t" << "Interest \t" << "Principal \t" << "Ending Balance" << endl;
+    cout << fixed << setprecision(2);
+    cout 
+        << setw(10) << "Month" 
+        << setw(20) << "Beginning Balance" 
+        << setw(20) << "Interest" 
+        << setw(20) << "Principal" 
+        << setw(20) << "Ending Balance" 
+        << endl;
 
     for(int i = 0; i < n; i++){
-        cout << i << "\t" << beginning_balances[i] << "\t\t\t" << interest_amounts[i] << "\t\t" << principal_amounts[i] << "\t\t" << ending_balances[i] << endl;
+        cout 
+            << setw(8) << i + 1
+            << setw(20) << beginning_balances[i]
+            << setw(20) << interest_amounts[i]
+            << setw(20) << principal_amounts[i]
+            << setw(20) << ending_balances[i] 
+            << endl;
 
     }
 };
-
-/*
-ISSUES:
-
-Balance is rounding to the nearest decimal for some reason 
-*/
