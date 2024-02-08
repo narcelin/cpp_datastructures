@@ -30,8 +30,8 @@ r = (1+ (APR/100)^1/12) - 1
 void ValueInputer(double* balance, double* apr, int* n);
 float AprConverter(double apr);
 double AmortizationCalculator(int balance, float r, int n);
-void InterestAndPrincipalCalculator(double* balance, float r, double m);
-void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* m);
+void InterestAndPrincipalCalculator(double* balance, float r, double* payment_amount, double* interest_amount, double* principal_amount);
+void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* payment_amount);
 void DisplayTabularInformation();
 
 
@@ -42,13 +42,13 @@ int main(){
     int n = 24; //Loan term in months
 
     double interest_amount = 0.00;
-    double principal_amout = 0.00;
+    double principal_amount = 0.00;
 
     // ValueInputer(&balance, &apr, &n);
     float r = AprConverter(apr);
-    double m = AmortizationCalculator(balance, r, n); //Monthly payments
-
-    InterestAndPrincipalCalculator(&balance, r, m);
+    double payment_amount = AmortizationCalculator(balance, r, n); //Monthly payments
+    InterestAndPrincipalCalculator(&balance, r, &payment_amount, &interest_amount, &principal_amount);
+    InterestAndPrincipalCalculator(&balance, r, &payment_amount, &interest_amount, &principal_amount);
     
 
     return 0;
@@ -80,24 +80,24 @@ double AmortizationCalculator(int balance, float r, int n){
     return(balance * (r * pow((1 + r), n))/(pow((1 + r), n) - 1));
 };
 
-void InterestAndPrincipalCalculator(double* balance_ptr, float r, double m){
-    double interest_amount = (r * *balance_ptr);
-    cout << interest_amount << endl;
-    double principal_amount = m - interest_amount;
-    cout << principal_amount;
+void InterestAndPrincipalCalculator(double* balance_ptr, float r, double* payment_amount, double* interest_amount, double* principal_amount){
+    *interest_amount = (r * *balance_ptr);
+    *principal_amount = *payment_amount - *interest_amount;
+    *balance_ptr = *balance_ptr - *principal_amount;
+    cout << "NEW LINE" << endl << *payment_amount << endl << *interest_amount << endl << *principal_amount << endl << *balance_ptr << endl;;
     
     /*
     update interest value and principal value
     */
 };
 
-void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* m){
+void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* payment_amount){
     double beginning_balance[n - 1];
     double ending_balance[n - 1];
     double interest_amounts[n - 1];
     double principal_amounts[n-1];
 
-    while(n > 0){
+    for(int i = n; i > 0; i--){
 
     }
 };
