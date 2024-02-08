@@ -8,6 +8,7 @@ Creator: Nicolas Arcelin Ovando
 */
 
 #include <iostream>
+#include <cmath>
 #include <array>
 
 using namespace std;
@@ -26,52 +27,79 @@ r = (1+ (APR/100)^1/12) - 1
 
 //Pointers for the functions?? call by reference
 
-void ValueInputer(int* p, double* apr, int* n);
-
-void AprConverter(double apr);
-
-void AmortizationCalculator(float p, double r, int n);
-
-void InterestAndPrincipalCalculator();
-
-void TotalPaymentsAndInterestAccumulator();
-
+void ValueInputer(double* balance, double* apr, int* n);
+float AprConverter(double apr);
+double AmortizationCalculator(int balance, float r, int n);
+void InterestAndPrincipalCalculator(double* balance, float r, double m);
+void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* m);
 void DisplayTabularInformation();
 
-int main(){
-    int p = 0; // Loan Amount
-    double apr = 0.00; //Annual Percentage Rate
-    int n = 0; //Loan term in months
 
-    ValueInputer(&p, &apr, &n);
+
+int main(){
+    double balance = 20000; // Loan Amount
+    double apr = 10; //Annual Percentage Rate
+    int n = 24; //Loan term in months
+
+    double interest_amount = 0.00;
+    double principal_amout = 0.00;
+
+    // ValueInputer(&balance, &apr, &n);
+    float r = AprConverter(apr);
+    double m = AmortizationCalculator(balance, r, n); //Monthly payments
+
+    InterestAndPrincipalCalculator(&balance, r, m);
+    
+
     return 0;
 }
 
-void ValueInputer(int* p_ptr, double* apr_ptr, int* n_ptr){ 
+
+
+void ValueInputer(double* balance_ptr, double* apr_ptr, int* n_ptr){ 
 
     cout << "----- Input the following values -----" << endl;
    
     cout << "Loan Amount (P): ";
-    cin >> *p_ptr;
-    cout << *p_ptr;
+    cin >> *balance_ptr;
     
     cout << "Annual Percentage Rate (APR): ";
-    // cin >> apr;
+    cin >> *apr_ptr;
    
-    cout << "Loan Term \"in years\" (n): ";
-    // cin >> n;
+    cout << "Loan Term \"in months\" (n): ";
+    cin >> *n_ptr;
 
 };
-/*
-ERROR: if non integer value is inputted program ends without trying to convert it. (SOLVE using pointers)
-*/
 
-void AprConverter(double apr);
+float AprConverter(double apr){
+    float r = (pow((1+(apr/100)),(1.0/12))) - 1; //Monthly interest rate
+    return r;
+};
 
-void AmortizationCalculator(float p, double r, int n);
+double AmortizationCalculator(int balance, float r, int n){
+    return(balance * (r * pow((1 + r), n))/(pow((1 + r), n) - 1));
+};
 
-void InterestAndPrincipalCalculator();
+void InterestAndPrincipalCalculator(double* balance_ptr, float r, double m){
+    double interest_amount = (r * *balance_ptr);
+    cout << interest_amount << endl;
+    double principal_amount = m - interest_amount;
+    cout << principal_amount;
+    
+    /*
+    update interest value and principal value
+    */
+};
 
-void TotalPaymentsAndInterestAccumulator();
+void TotalPaymentsAndInterestAccumulator(int n, double* balance, float r, double* m){
+    double beginning_balance[n - 1];
+    double ending_balance[n - 1];
+    double interest_amounts[n - 1];
+    double principal_amounts[n-1];
+
+    while(n > 0){
+
+    }
+};
 
 void DisplayTabularInformation();
