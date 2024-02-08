@@ -1,4 +1,6 @@
-  // for(int i = 0; i < n; i++){
-    //     cout << i << "\t" << beginning_balances[i] << "\t\t" << interest_amounts[i] << "\t\t" << principal_amounts[i] << "\t\t" << ending_balances[i] << endl;
-
-    // }
+ // if(!(cin >> *balance_ptr) || *balance_ptr < 1){
+        //     cout<<"INVALID. Please input a Loan Amount greater the 1"<<endl;
+        // } else {
+        //     cout << "RAN????";
+        //     isLoanAmountValid = true;
+        // };

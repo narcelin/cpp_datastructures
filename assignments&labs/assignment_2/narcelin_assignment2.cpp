@@ -39,23 +39,21 @@ void DisplayTabularInformation(int n, double beginning_balances[], double ending
 
 
 int main(){
-    double balance = 20000; //Loan Amount
-    double apr = 10; //Annual Percentage Rate
-    int n = 24; //Loan term in months
+    double balance = 0.00; //Loan Amount
+    double apr = 0.00; //Annual Percentage Rate
+    int n = 0; //Loan term in months
 
     double interest_amount = 0.00;
     double principal_amount = 0.00;
 
-    // ValueInputer(&balance, &apr, &n);
+    ValueInputer(&balance, &apr, &n);
     float r = AprConverter(apr);
     double payment_amount = AmortizationCalculator(balance, r, n); //Monthly payments
-
 
     double beginning_balances[n - 1];
     double ending_balances[n - 1];
     double interest_amounts[n - 1];
     double principal_amounts[n-1];
-
 
     TotalPaymentsAndInterestAccumulator(n, &balance, r, &payment_amount, &interest_amount, &principal_amount, beginning_balances, ending_balances, interest_amounts, principal_amounts);
     DisplayTabularInformation(n, beginning_balances, ending_balances, interest_amounts, principal_amounts);
@@ -63,20 +61,46 @@ int main(){
     return 0;
 }
 
-
-
 void ValueInputer(double* balance_ptr, double* apr_ptr, int* n_ptr){ 
 
     cout << "----- Input the following values -----" << endl;
    
-    cout << "Loan Amount (P): ";
-    cin >> *balance_ptr;
+   bool isLoanAmountValid = false;
+    do{
+        cout << "Loan Amount (P): ";
+        cin >> *balance_ptr; //Code breaks if user inputs non-numeric value. Usure how to rectify issue.
+        if(*balance_ptr <= 0){
+            cout << "### INVALID ### : Please input a Loan Amount greater the 0" << endl;
+            isLoanAmountValid = false;
+        } else {
+            isLoanAmountValid = true;
+        }
+   } while (!isLoanAmountValid);
     
-    cout << "Annual Percentage Rate (APR): ";
-    cin >> *apr_ptr;
-   
-    cout << "Loan Term \"in months\" (n): ";
-    cin >> *n_ptr;
+    bool isAnnualPercentageRateValid = false;
+    do{
+        cout << "Annual Percentage Rate (APR): ";
+        cin >> *apr_ptr; //Code breaks if user inputs non-numeric value. Usure how to rectify issue.
+        if(*apr_ptr <= 0){
+            cout << "### INVALID ### : Please input a Annual Percentage Rate greater then 0" << endl;
+            isAnnualPercentageRateValid = false;
+        } else {
+            isAnnualPercentageRateValid = true;
+        }
+   } while (!isAnnualPercentageRateValid);
+    
+    bool isLoanTermValid = false;
+    do{
+        cout << "Loan Term \"in months\" (n): ";
+        cin >> *n_ptr; //Code breaks if user inputs non-numeric value. Usure how to rectify issue.
+        if(*n_ptr <= 0){
+            cout << "### INVALID ### : Please input a Loan Term greater then 0" << endl;
+            isLoanTermValid = false;
+        } else {
+            isLoanTermValid = true;
+        }
+   } while (!isLoanTermValid);
+    
 
 };
 
