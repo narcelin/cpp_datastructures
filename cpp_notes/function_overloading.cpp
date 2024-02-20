@@ -7,7 +7,6 @@ We can use two different functions with the same exact name.
 using namespace std;
 
 void functionX(int intValue);
-int functionX(int intValue); //Teacher said this was doable? Ask question
 void functionX(char charValue);
 void functionX(int intValue, char charValue);
 
@@ -25,10 +24,6 @@ int main(){
 
 void functionX(int intValue){
     cout << "Fuction 1 Ran" << endl;
-};
-
-int functionX(int intValue){
-    return 0;
 };
 
 void functionX(char charValue){   

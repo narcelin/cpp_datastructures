@@ -1,3 +1,7 @@
+/*
+    File in ifstream example with string replacement
+*/
+
 #include <iostream>
 #include <cstring>
 #include <fstream>
