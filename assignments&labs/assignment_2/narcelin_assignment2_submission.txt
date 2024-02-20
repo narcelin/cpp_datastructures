@@ -39,31 +39,51 @@ void DisplayTabularInformation(int n, double beginning_balances[], double ending
 
 
 int main(){
-    double balance = 0.00; //Loan Amount
-    double apr = 0.00; //Annual Percentage Rate
-    int n = 0; //Loan term in months
+    bool rerun_program = false;
+    do{
+        double balance = 0.00; //Loan Amount
+        double apr = 0.00; //Annual Percentage Rate
+        int n = 0; //Loan term in months
 
-    double interest_amount = 0.00;
-    double principal_amount = 0.00;
+        double interest_amount = 0.00;
+        double principal_amount = 0.00;
 
-    ValueInputer(&balance, &apr, &n);
-    float r = AprConverter(apr);
-    double payment_amount = AmortizationCalculator(balance, r, n); //Monthly payments
+        ValueInputer(&balance, &apr, &n);
+        float r = AprConverter(apr);
+        double payment_amount = AmortizationCalculator(balance, r, n); //Monthly payments
 
-    double beginning_balances[n - 1];
-    double ending_balances[n - 1];
-    double interest_amounts[n - 1];
-    double principal_amounts[n-1];
+        double beginning_balances[n - 1];
+        double ending_balances[n - 1];
+        double interest_amounts[n - 1];
+        double principal_amounts[n-1];
 
-    TotalPaymentsAndInterestAccumulator(n, &balance, r, &payment_amount, &interest_amount, &principal_amount, beginning_balances, ending_balances, interest_amounts, principal_amounts);
-    DisplayTabularInformation(n, beginning_balances, ending_balances, interest_amounts, principal_amounts);
+        TotalPaymentsAndInterestAccumulator(n, &balance, r, &payment_amount, &interest_amount, &principal_amount, beginning_balances, ending_balances, interest_amounts, principal_amounts);
+        DisplayTabularInformation(n, beginning_balances, ending_balances, interest_amounts, principal_amounts);
 
+
+        char rerun_input_valid = false;
+        do{
+            cout << "Do you want to re-run this program? (y/n): ";
+            char rerun_program = ' ';
+            cin >> rerun_program;
+            if(rerun_program == 'y'){
+                cout << endl << "------------ RE INITALIZING PROGRAM ------------ " << endl << endl;
+                rerun_program = true;
+                rerun_input_valid = true;
+            } else if(rerun_program == 'n'){
+                cout << endl << "END OF PROGRAM" << endl;
+                exit(1);
+            } else {
+                cout << "### INVALID INPUT ###: Please input 'y' for yes and 'n' for no" << endl;
+            }
+        } while(!rerun_input_valid);
+    } while (!rerun_program);
     return 0;
 }
 
 void ValueInputer(double* balance_ptr, double* apr_ptr, int* n_ptr){ 
 
-    cout << "----- Input the following values -----" << endl;
+    cout << "*** Input the following values ***" << endl;
    
    bool isLoanAmountValid = false;
     do{
