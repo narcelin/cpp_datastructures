@@ -1,1 +1,2 @@
-cout
+
+        // cout << "Grade " << i << ": " << temp << 
