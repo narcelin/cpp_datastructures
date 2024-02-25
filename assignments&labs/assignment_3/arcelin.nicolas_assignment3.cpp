@@ -8,15 +8,15 @@ int Random_Number_Generator(int min, int max);
 
 void Random_Grades_Generator(ofstream& fileOut, int maximum_points);
 
-void averageCalculator(ifstream& fileIn2, ofstream& fileOut, string line, int lineNumber);
+void studentFileOutput(ifstream& fileIn2, ofstream& fileOut, string line, int lineNumber);
 
 int main(){
+    //Creates random grades for students
     srand(time(NULL));
 
-    //Could change to ask user to input names
     string students[] = {"Doe, John", "Smith, Adam", "Randal, Bob", "Delony, Danny", "Cooly, Carly", "Genuis, Gina", "Chapelle, Dave", "Jackson, Michael", "Sleepy, Adam", "Duck, Donald", "END_OF_ARRAY"};
 
-    ofstream fileOut("example.txt");
+    ofstream fileOut("students_without_averages.txt");
 
     if(!fileOut) {
         cout << "Unable to create file" << endl;
@@ -30,20 +30,20 @@ int main(){
         
     fileOut.close();
 
-    ofstream newFileOut("students_with_average.txt", ios::app);
-    ifstream fileIn("example.txt");
-    ifstream fileIn2("example.txt");
+    
+
+    //Having issues with the pointer so I set two separate input streams for the file in.
+    ofstream newFileOut("students_with_averages.txt", ios::app);
+    ifstream fileIn("students_without_averages.txt");
+    ifstream fileIn2("students_without_averages.txt");
 
     string line;
-    int lineNumber = 1;
+    int lineNumber = 1; //Helper to change line pointer
     while(getline(fileIn, line)){
-        // cout << "LINE : " << line << endl;
-        averageCalculator(fileIn2, newFileOut, line, lineNumber);
+        studentFileOutput(fileIn2, newFileOut, line, lineNumber);
         lineNumber++;
     }
     
-    // cout << line;
-
     fileIn.close();
 
     return 0;
@@ -65,11 +65,12 @@ void Random_Grades_Generator(ofstream& fileOut, int maximum_points){
     fileOut << endl;
 };
 
-//Input grade[] = {Maximum possible points on one exam * -1 , exam grade 1, exam grade 2, etc...}
-void averageCalculator(ifstream& fileIn2, ofstream& newFileOut, string line, int lineNumber){
+void studentFileOutput(ifstream& fileIn2, ofstream& newFileOut, string line, int lineNumber){
     
     int total_sum = 0;
 
+    //So I was having a really hard time with this. Decided to keep this because it was working. This is to change the inputFile ptr line.
+    //Personally will find a better way to do this
     fileIn2.seekg(0);
     string line2;
     for(int i = 1 ; i < lineNumber; i++){
@@ -84,12 +85,9 @@ void averageCalculator(ifstream& fileIn2, ofstream& newFileOut, string line, int
         int temp;
         fileIn2 >> temp;
         cout << "TEMP: " << temp << endl;
-        // cout << "Grade " << i << ": " << temp << endl;
         total_sum += temp;
     }
-    // cout << "total sum: " << total_sum << endl;
     double average_grade = total_sum / 400.00 * 100;
 
-    // line += average_grade;
     newFileOut << line << average_grade << endl;
 };
