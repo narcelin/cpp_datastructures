@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 // Node class represents each element in the linked list
 class Node {
 public:
@@ -29,6 +31,7 @@ public:
         //TODO: if nothing is there add the node at the computed location
         if(!arraylist_1[index]){
             arraylist_1[index] = new Node(key, value);
+            return;
         } else {
             Node* currentNode = arraylist_1[index];
             while(currentNode -> next != nullptr){
@@ -45,9 +48,35 @@ public:
     // Delete a specific node with a given key using hash function
     void remove(int key) {
         //TODO: compute the index
+        int index = key % 8;
 
         
         //TODO: check if there is anything at the computed index
+        if(!arraylist_1[index]){
+            cout << "Nothing to remove" << endl;
+            return;
+        } else {
+            cout << "Node found with key: " << key << " Found" << endl;
+            
+            //Loops unti located node with key
+            Node* currentNode = arraylist_1[index];
+            Node* prevNode;
+            bool isHead = true;
+            while(currentNode -> key != key && currentNode != nullptr){
+                if(isHead) isHead = false;
+                prevNode = currentNode;
+                currentNode = currentNode -> next;
+            }
+ 
+            //If node we are looking for is at the head
+            if(isHead) {
+                arraylist_1[index] = currentNode -> next;
+            } else{
+                prevNode -> next = currentNode -> next;
+                cout << "Deleting KEY: " << currentNode -> key << " VALUE: " << currentNode -> value << endl;
+            }
+                delete currentNode;
+        }
 
         //TODO: find the node with the specified key 
         //Note: make sure to handle cases where it is at the head and in the middle of the list
@@ -87,12 +116,23 @@ public:
 
 int main() {
     ArrayList list;  // Create an array list 
+    Node* test = new Node(50, 5);
+    cout << test->key << endl;
 
     //test your code with a series of insertion and removal operations
     list.insertWithHash(36, 20);
     list.display();
 
     list.insertWithHash(22, 43);
+    list.display();
+
+    list.insertWithHash(20, 34);
+    list.display();
+    
+    list.insertWithHash(30, 96);
+    list.display();
+
+    list.remove(36);
     list.display();
 
     return 0;
