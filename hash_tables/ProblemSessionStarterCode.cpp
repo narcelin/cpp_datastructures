@@ -117,22 +117,26 @@ public:
 int main() {
     ArrayList list;  // Create an array list 
     Node* test = new Node(50, 5);
-    cout << test->key << endl;
+
+    //Finding Conflicts in hash function
+    // for(int i = 0; i < 50; i ++){
+    //     for(int x = 0; x < 50; x++){
+    //     if(i%8 == x%8){
+    //         cout << "CONFLICT AT " << i << " & " << x << endl;
+    //     }
+    //     }
+    // }
 
     //test your code with a series of insertion and removal operations
-    list.insertWithHash(36, 20);
+    list.insertWithHash(0, 20);
+    list.insertWithHash(8, 20);
+    list.insertWithHash(16, 20);
+    list.insertWithHash(24, 20);
+    list.insertWithHash(32, 20);
+    list.insertWithHash(40, 20);
     list.display();
 
-    list.insertWithHash(22, 43);
-    list.display();
-
-    list.insertWithHash(20, 34);
-    list.display();
-    
-    list.insertWithHash(30, 96);
-    list.display();
-
-    list.remove(36);
+    list.remove(24);
     list.display();
 
     return 0;
