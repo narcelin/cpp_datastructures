@@ -2,13 +2,13 @@
 
 class CircularQueue {
 private:
-    int* array;
     int f; // front
-    int r; // rear
     int size;
     int N; // capacity
 
 public:
+    int* array;
+    int r; // rear
     CircularQueue(int N) : N(N) {
         array = new int[N];
         f = r = -1;
@@ -34,11 +34,12 @@ public:
 
         if (isEmpty()) {
             f = r = 0;
+            array[r] = value;
         } else {
+            array[r] = value;
             r = (r + 1) % N;
         }
 
-        array[r] = value;
         size++;
     }
 
@@ -83,7 +84,7 @@ public:
 };
 
 int main() {
-    CircularQueue queue(5);
+    CircularQueue queue(10);
 
     queue.enqueue(1);
     queue.enqueue(2);
@@ -102,6 +103,8 @@ int main() {
     queue.display(); // Should print: 3 4 5 6 7
 
     std::cout << "Front element: " << queue.peek() << std::endl; // Should print: 3
+
+    std::cout << queue.array[queue.r]<< " "<<queue.r << std::endl;
 
     return 0;
 }
